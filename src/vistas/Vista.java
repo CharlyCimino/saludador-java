@@ -4,6 +4,7 @@ package vistas;
 import java.awt.Image;
 import java.awt.Toolkit;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 /**
@@ -25,7 +26,10 @@ public class Vista extends javax.swing.JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE); // La aplicación por defecto se cierra al tocar la cruz
         this.establecerIcono(); // OPCIONAL. Personaliza el ícono de la ventana
         this.establecerLookAndFeel(); // OPCIONAL. Hace lucir a los componentes como si se tratase de un app nativa de Windows
+        this.setResizable(false); // Hace que la ventana no sea redimensionable
         this.setVisible(true); // Hace la ventana visible
+        
+        this.jButton1.setEnabled(false); // El botón saludar aparece desactivado por defecto.
     }
     
     private void establecerIcono() {
@@ -54,10 +58,19 @@ public class Vista extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jCheckBox1 = new javax.swing.JCheckBox();
         jButton1 = new javax.swing.JButton();
+
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(jList1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Saludador");
@@ -67,6 +80,11 @@ public class Vista extends javax.swing.JFrame {
         jLabel1.setText("Tu nombre:");
 
         jTextField1.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+        });
 
         jCheckBox1.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
         jCheckBox1.setText("Con entusiasmo");
@@ -75,6 +93,11 @@ public class Vista extends javax.swing.JFrame {
         jButton1.setFont(new java.awt.Font("Lato", 1, 24)); // NOI18N
         jButton1.setForeground(new java.awt.Color(238, 245, 247));
         jButton1.setText("Saludar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -102,17 +125,38 @@ public class Vista extends javax.swing.JFrame {
                 .addComponent(jCheckBox1)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String saludo = "Hola, " + jTextField1.getText();
+        if ( jCheckBox1.isSelected() ) {
+            saludo = "¡¡¡¡¡" + saludo + "!!!!!";
+        }
+        JOptionPane.showMessageDialog(rootPane, saludo, "Saludando", 1);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        if( jTextField1.getText().isEmpty() ) {
+            jButton1.setEnabled(false);
+        }
+        else {
+            jButton1.setEnabled(true);
+        }
+    }//GEN-LAST:event_jTextField1KeyReleased
+    
+    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JList<String> jList1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
